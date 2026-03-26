@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Wanyeki — Fintech Copywriter</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a08;
+    --bg2: #111110;
+    --surface: #1a1a17;
+    --gold: #c9a84c;
+    --gold-light: #e4c97e;
+    --gold-dim: rgba(201,168,76,0.15);
+    --cream: #f0e6d0;
+    --muted: #6b6b5e;
+    --text: #e8e0d0;
+    --border: rgba(201,168,76,0.2);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  .cursor {
+    position: fixed; width: 8px; height: 8px;
+    background: var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+  }
+  .cursor-ring {
+    position: fixed; width: 32px; height: 32px;
+    border: 1px solid rgba(201,168,76,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, border-color 0.2s;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9990; opacity: 0.4;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.8rem 5rem;
+    background: rgba(10,10,8,0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-style: italic; font-weight: 300;
+    color: var(--gold-light); text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 3rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 10rem 5rem 6rem; position: relative; overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; right: -2rem; transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(8rem, 18vw, 18rem); font-weight: 700;
+    color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.05);
+    white-space: nowrap; pointer-events: none; user-select: none; line-height: 1;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7.5rem); font-weight: 300;
+    line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem); font-style: italic; font-weight: 300;
+    color: var(--muted); max-width: 520px; line-height: 1.7; margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 1rem;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border: 1px solid var(--border); padding: 1rem 2rem;
+    transition: all 0.3s; width: fit-content;
+    opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+  .hero-cta:hover { background: var(--gold-dim); border-color: var(--gold); gap: 1.5rem; }
+  .hero-cta::after { content: '→'; }
+  .hero-location {
+    position: absolute; bottom: 3rem; right: 5rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); writing-mode: vertical-rl;
+    opacity: 0; animation: fadeIn 1s ease 1.2s forwards;
+  }
+  .scroll-indicator {
+    position: absolute; bottom: 3rem; left: 5rem;
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    opacity: 0; animation: fadeIn 1s ease 1.4s forwards;
+  }
+  .scroll-line {
+    width: 40px; height: 1px; background: var(--muted);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes scrollPulse { 0%,100% { width: 40px; opacity: 0.5; } 50% { width: 60px; opacity: 1; } }
+
+  /* ABOUT */
+  .about {
+    padding: 8rem 5rem; display: grid; grid-template-columns: 1fr 1.6fr;
+    gap: 8rem; align-items: center;
+    background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .about-label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 300; line-height: 1.1; margin-bottom: 2.5rem;
+  }
+  .about-heading em { font-style: italic; color: var(--gold-light); }
+  .about-stats { display: flex; flex-direction: column; gap: 2rem; }
+  .stat { border-left: 1px solid var(--border); padding-left: 1.5rem; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .about-text p { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 300; line-height: 1.8; color: var(--text); margin-bottom: 1.5rem; }
+  .about-text p:first-child { font-size: 1.5rem; font-style: italic; color: var(--cream); }
+  .about-text p strong { color: var(--gold-light); font-weight: 600; }
+  .specialisms { display: flex; gap: 0.8rem; margin-top: 2rem; flex-wrap: wrap; }
+  .specialism-tag {
+    font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--border); padding: 0.5rem 1rem; transition: all 0.2s;
+  }
+  .specialism-tag:hover { background: var(--gold-dim); border-color: var(--gold); }
+
+  /* WORK */
+  .work { padding: 8rem 5rem; }
+  .work-header { margin-bottom: 5rem; }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 300; line-height: 1.1; }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
+  .work-card {
+    background: var(--bg); padding: 3rem; position: relative; overflow: hidden; transition: background 0.4s; cursor: pointer;
+  }
+  .work-card:hover { background: var(--surface); }
+  .work-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .work-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 2px; background: var(--gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .work-card:hover::before { transform: scaleX(1); }
+  .card-format {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--border); padding: 0.35rem 0.8rem; margin-bottom: 1.8rem;
+  }
+  .card-number {
+    position: absolute; top: 2rem; right: 2.5rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 700;
+    color: rgba(201,168,76,0.05); line-height: 1; pointer-events: none;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem;
+    color: var(--cream); transition: color 0.3s;
+  }
+  .work-card:hover .card-title { color: var(--gold-light); }
+  .card-excerpt {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 300; font-style: italic;
+    line-height: 1.7; color: var(--muted); margin-bottom: 2rem;
+  }
+  .card-read {
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.2s;
+  }
+  .work-card:hover .card-read { gap: 1rem; }
+  .card-read::after { content: '→'; }
+  .email-preview {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 2px; padding: 1.5rem;
+  }
+  .email-subject { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .email-body { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--muted); line-height: 1.7; }
+
+  /* CONTACT */
+  .contact {
+    padding: 8rem 5rem; background: var(--bg2); border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: start;
+  }
+  .contact-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 2rem;
+  }
+  .contact-intro em { font-style: italic; color: var(--gold-light); }
+  .contact-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--muted); line-height: 1.7; margin-bottom: 3rem; }
+  .contact-email-link {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 1rem; color: var(--gold); text-decoration: none;
+    border-bottom: 1px solid var(--border); padding-bottom: 1rem; transition: all 0.3s;
+  }
+  .contact-email-link:hover { color: var(--gold-light); gap: 1.5rem; }
+  .contact-email-link::before { content: '✉  '; }
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .form-input, .form-textarea {
+    background: transparent; border: none; border-bottom: 1px solid var(--border);
+    padding: 0.8rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+    color: var(--text); outline: none; transition: border-color 0.3s; width: 100%;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); font-style: italic; }
+  .form-textarea { resize: none; height: 100px; }
+  .form-submit {
+    display: inline-flex; align-items: center; gap: 1rem;
+    font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bg); background: var(--gold); border: none;
+    padding: 1.1rem 2.5rem; cursor: none; transition: all 0.3s; margin-top: 0.5rem; width: fit-content;
+  }
+  .form-submit:hover { background: var(--gold-light); gap: 1.5rem; }
+  .form-submit::after { content: '→'; }
+
+  footer {
+    padding: 2rem 5rem; display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .footer-copy { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(201,168,76,0.25); }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(5,5,4,0.96); backdrop-filter: blur(12px);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 2rem; overflow-y: auto;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    max-width: 760px; width: 100%; padding: 4rem;
+    position: relative; margin: auto;
+    transform: translateY(30px);
+    transition: transform 0.4s ease;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); font-family: 'Syne', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.5rem 1rem; cursor: none; transition: all 0.2s;
+  }
+  .modal-close:hover { color: var(--gold); border-color: var(--gold); }
+  .modal-format {
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--border); padding: 0.35rem 0.8rem;
+    display: inline-block; margin-bottom: 1.5rem;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 400; line-height: 1.2;
+    color: var(--cream); margin-bottom: 2rem; padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-body { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; line-height: 1.9; color: var(--text); }
+  .modal-body p { margin-bottom: 1.4rem; }
+  .modal-body h4 { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin: 2.5rem 0 1rem; }
+  .modal-body .email-block { background: var(--surface); border-left: 2px solid var(--gold); padding: 1.5rem 2rem; margin: 1.5rem 0; }
+  .modal-body .email-block .subj { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .modal-body strong { color: var(--gold-light); font-weight: 600; }
+  .modal-body em { font-style: italic; color: var(--cream); }
+  .modal-body .lp-headline { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--cream); margin: 1rem 0; line-height: 1.1; }
+  .modal-body .lp-sub { font-size: 1rem; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .modal-body .lp-cta { display: inline-block; background: var(--gold); color: var(--bg); font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.9rem 2rem; margin: 1rem 0 2rem; }
+  .modal-body .social-post { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; border-radius: 2px; }
+  .modal-body .post-num { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { padding: 8rem 1.5rem 4rem; }
+    .about { padding: 5rem 1.5rem; grid-template-columns: 1fr; gap: 3rem; }
+    .work { padding: 5rem 1.5rem; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card.featured { grid-column: span 1; grid-template-columns: 1fr; gap: 2rem; }
+    .contact { padding: 5rem 1.5rem; grid-template-columns: 1fr; gap: 4rem; }
+    footer { padding: 2rem 1.5rem; }
+    .scroll-indicator, .hero-location { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" id="modalClose">✕ Close</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">Alex Wanyeki</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg-text">WRITE</div>
+  <div class="hero-eyebrow">Fintech Copywriter &amp; Content Strategist</div>
+  <h1 class="hero-title">Words that move<br><em>markets.</em></h1>
+  <p class="hero-tagline">"I turn complex financial ideas into copy that actually makes people act."</p>
+  <a href="#work" class="hero-cta">View My Work</a>
+  <div class="scroll-indicator"><div class="scroll-line"></div>Scroll</div>
+  <div class="hero-location">Nairobi, Kenya — Silicon Savannah</div>
+</section>
+
+<section class="about" id="about">
+  <div class="reveal">
+    <div class="about-label">About</div>
+    <h2 class="about-heading">The writer<br>behind the <em>words</em></h2>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Formats mastered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Niche. Done right.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ideas to explore</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-text reveal reveal-delay-2">
+    <p>Most finance writing puts people to sleep. Mine doesn't.</p>
+    <p>Alex Wanyeki is a Nairobi-based fintech copywriter and content strategist who believes that even the driest financial concept can be made compelling. From breaking down DeFi for first-timers to writing landing pages that convert, Alex brings <strong>clarity, wit, and a sharp commercial instinct</strong> to every brief.</p>
+    <p>Based in the Silicon Savannah — writing for the world.</p>
+    <div class="specialisms">
+      <span class="specialism-tag">Blog Content</span>
+      <span class="specialism-tag">Copywriting</span>
+      <span class="specialism-tag">Email Campaigns</span>
+      <span class="specialism-tag">Landing Pages</span>
+      <span class="specialism-tag">Thought Leadership</span>
+    </div>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="work-header reveal">
+    <div class="section-label">Selected Work</div>
+    <h2 class="section-title">Writing that <em>works</em><br>across every format</h2>
+  </div>
+
+  <div class="work-grid">
+
+    <div class="work-card featured reveal">
+      <div>
+        <div class="card-format">✉ Email Campaign</div>
+        <div class="card-number">01</div>
+        <h3 class="card-title">"Your money is sitting idle. Let's fix that."</h3>
+        <p class="card-excerpt">A 3-part drip sequence for a digital savings platform — nudging users from passive sign-ups into active investors. Each email engineered to feel personal, urgent, and impossible to ignore.</p>
+        <span class="card-read">Read Sample</span>
+      </div>
+      <div class="email-preview">
+        <div class="email-subject">Subject: You opened an account. That was the easy part.</div>
+        <div class="email-body">"Most people save money the way they plan to go to the gym — eventually. But here's the thing about eventually: it never shows up on a Tuesday. Your KES 5,000 is sitting in a current account earning you almost nothing. We built something better. And it takes four minutes to set up."</div>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="card-format">📄 Blog Post</div>
+      <div class="card-number">02</div>
+      <h3 class="card-title">"M-Pesa Changed Money. Here's What's Changing Next."</h3>
+      <p class="card-excerpt">A long-form editorial exploring the next wave of fintech innovation sweeping East Africa — and what it means for everyday people who thought mobile money was the finish line.</p>
+      <span class="card-read">Read Sample</span>
+    </div>
+
+    <div class="work-card reveal reveal-delay-1">
+      <div class="card-format">🖥 Landing Page</div>
+      <div class="card-number">03</div>
+      <h3 class="card-title">"Stop Explaining Your Product. Start Selling the Outcome."</h3>
+      <p class="card-excerpt">High-converting landing page copy for a Kenyan savings app targeting millennials. The brief: take a complex product and make it feel like a no-brainer.</p>
+      <span class="card-read">Read Sample</span>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="card-format">📱 Social Media</div>
+      <div class="card-number">04</div>
+      <h3 class="card-title">"6 LinkedIn Posts for a Kenyan Crypto Exchange"</h3>
+      <p class="card-excerpt">Scroll-stopping short-form copy that walks the tightrope between education and brand voice — turning a skeptical audience into a curious one, one post at a time.</p>
+      <span class="card-read">Read Sample</span>
+    </div>
+
+    <div class="work-card reveal reveal-delay-1">
+      <div class="card-format">📰 Thought Leadership</div>
+      <div class="card-number">05</div>
+      <h3 class="card-title">"Why Your Bank's Content Strategy is Boring You to Death"</h3>
+      <p class="card-excerpt">A bold opinion piece aimed at finance executives — arguing that the industry's obsession with compliance-friendly language is costing them an entire generation of customers.</p>
+      <span class="card-read">Read Sample</span>
+    </div>
+
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="reveal">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="contact-intro">Let's make something<br><em>worth reading.</em></h2>
+    <p class="contact-sub">Whether you need a landing page that converts, a blog that actually gets read, or an email sequence that doesn't feel like spam — let's talk.</p>
+    <a href="mailto:awanyeki33@gmail.com" class="contact-email-link">awanyeki33@gmail.com</a>
+  </div>
+  <div class="reveal reveal-delay-2">
+    <div class="contact-form">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="What should I call you?">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="Where can I reach you?">
+      </div>
+      <div class="form-group">
+        <label class="form-label">What do you need?</label>
+        <textarea class="form-textarea" placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button class="form-submit" id="submitBtn">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Alex Wanyeki. All rights reserved.</span>
+  <span class="footer-logo">Alex Wanyeki</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  (function animateRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+  document.querySelectorAll('a, button, .work-card, .specialism-tag').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.width = '50px'; ring.style.height = '50px'; ring.style.borderColor = 'rgba(201,168,76,0.8)'; });
+    el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.borderColor = 'rgba(201,168,76,0.5)'; });
+  });
+
+  // MODAL DATA
+  const samples = {
+    1: {
+      format: '✉ Email Campaign',
+      title: '"Your money is sitting idle. Let\'s fix that."',
+      body: `
+        <h4>The Brief</h4>
+        <p>A 3-part drip sequence for a digital savings platform targeting Kenyan millennials. Goal: move users from sign-up to first investment within 7 days.</p>
+        <h4>Email 1 — Day 0: The Wake-Up</h4>
+        <div class="email-block">
+          <div class="subj">Subject: You opened an account. That was the easy part.</div>
+          <p>Most people save money the way they plan to go to the gym — eventually.</p>
+          <p>But here's the thing about eventually: it never shows up on a Tuesday.</p>
+          <p>Your KES 5,000 is sitting in a current account right now, earning you almost nothing while inflation quietly eats it alive. We built something better. And it takes four minutes to set up.</p>
+          <p><strong>→ Start your first investment</strong></p>
+        </div>
+        <h4>Email 2 — Day 3: The Social Proof</h4>
+        <div class="email-block">
+          <div class="subj">Subject: James from Nairobi just hit his first milestone. Here's how.</div>
+          <p>James, 28, signed up three months ago with KES 2,000. He didn't have a financial plan. He wasn't sure he was doing it right. He just started.</p>
+          <p>Today, he has a growing fund he checks more than his Instagram.</p>
+          <p>The difference between James and most people? He didn't wait until he felt ready. <em>He just moved the money.</em></p>
+          <p><strong>→ Move your money. Start now.</strong></p>
+        </div>
+        <h4>Email 3 — Day 7: The Urgency Close</h4>
+        <div class="email-block">
+          <div class="subj">Subject: Last nudge. Then we leave you alone.</div>
+          <p>We know you're busy. We know it doesn't feel urgent.</p>
+          <p>But three months from now, you'll either have a growing fund or a screenshot of your balance looking exactly the same as today. One of those feels better than the other.</p>
+          <p>We're not here to pressure you. We're here because we built something that works, and it only works if you use it.</p>
+          <p><strong>→ Four minutes. That's all it takes.</strong></p>
+        </div>
+      `
+    },
+    2: {
+      format: '📄 Blog Post',
+      title: '"M-Pesa Changed Money. Here\'s What\'s Changing Next."',
+      body: `
+        <h4>Publication: East Africa Fintech Review &nbsp;|&nbsp; 1,400 words</h4>
+        <p><em>When M-Pesa launched in 2007, most people thought it was a niche tool for sending money home. Nobody predicted it would become the blueprint for mobile finance across an entire continent.</em></p>
+        <p>Seventeen years later, East Africa is doing it again. Quietly, incrementally, and with the kind of patient ambition that doesn't make headlines until suddenly it's everywhere.</p>
+        <p>Here's what's building beneath the surface — and why it matters to anyone who moves money for a living.</p>
+        <h4>The Infrastructure Shift Nobody Is Talking About</h4>
+        <p>The first wave of East African fintech was about access. Getting unbanked populations onto a financial grid. M-Pesa won that battle decisively. Over 50 million active users across the region. More transactions on a given day than most European banks process in a week.</p>
+        <p>But access was never the finish line. It was the foundation. What's being built on top of it now is something structurally different: <strong>programmable finance</strong>.</p>
+        <p>Think savings products that automatically adjust based on spending behaviour. Micro-insurance that activates when rainfall sensors detect drought. Credit scores built from mobile data that have never touched a traditional bureau. These aren't concepts. They're live. They're scaling.</p>
+        <h4>Who's Driving It</h4>
+        <p>The most interesting players aren't the incumbent telcos. They're the second-generation fintechs — leaner, API-first, built by founders who grew up using M-Pesa and are now competing with it. Companies like Chumz, Pezesha, and Apollo Agriculture are writing a different chapter: one where financial tools don't just move money, they change behaviour.</p>
+        <p>And they're attracting serious capital. East Africa fintech funding hit record levels last year — not despite global headwinds, but partly because of them. When other markets contracted, patient capital looked south.</p>
+        <h4>What It Means For You</h4>
+        <p>If you run a business, the next three years will bring financial tooling that was previously only available to enterprises. If you manage money — yours or someone else's — the interface between you and your funds is about to get a lot more intelligent. And if you're watching this space from the outside, the question isn't whether East Africa is a fintech leader. It already is. The question is how far ahead it's willing to go.</p>
+        <p><em>The answer, based on everything being built right now, is: further than you'd expect.</em></p>
+      `
+    },
+    3: {
+      format: '🖥 Landing Page',
+      title: '"Stop Explaining Your Product. Start Selling the Outcome."',
+      body: `
+        <h4>Client: Kenyan Savings App &nbsp;|&nbsp; Target: Millennials 25–35</h4>
+        <p class="lp-headline">Your money has been patient long enough.</p>
+        <p class="lp-sub">Start growing it in four minutes. No jargon. No minimums. No excuses.</p>
+        <span class="lp-cta">Get Started Free →</span>
+        <h4>Hero Sub-Copy</h4>
+        <p>Over 40,000 Kenyans are already growing their savings with Akiba. They're not financial experts. They're just people who decided that today was better than eventually.</p>
+        <h4>Feature Block Copy</h4>
+        <p><strong>Set it. Forget it. Watch it grow.</strong><br>Akiba automatically moves a small amount from your M-Pesa every week. Small enough that you won't miss it. Consistent enough that in six months, you'll be shocked what it became.</p>
+        <p><strong>Your money, your rules.</strong><br>Withdraw anytime. No penalties. No awkward calls with a relationship manager. Just you and your money, on your terms.</p>
+        <p><strong>Built for the way you actually live.</strong><br>Salary comes in late? We adjust. Big expense hits? We pause. Akiba works around your life — not the other way around.</p>
+        <h4>Testimonial Pull Quote</h4>
+        <p><em>"I signed up because a friend wouldn't stop talking about it. Three months later, I had saved more than I had in the previous two years combined."</em><br>— Wanjiru M., Westlands</p>
+        <h4>Closing CTA</h4>
+        <p>The best time to start was last year. The second best time is right now.</p>
+        <span class="lp-cta">Start in Four Minutes →</span>
+      `
+    },
+    4: {
+      format: '📱 Social Media',
+      title: '"6 LinkedIn Posts for a Kenyan Crypto Exchange"',
+      body: `
+        <h4>Client: Crypto Exchange &nbsp;|&nbsp; Goal: Education + Brand Trust</h4>
+        <div class="social-post">
+          <div class="post-num">Post 01 — The Hook</div>
+          <p>In 2010, someone bought two pizzas with Bitcoin. Cost: 10,000 BTC. Today, that's worth over $600 million.</p>
+          <p>Nobody's saying crypto is a guaranteed win. But the people who understood it early weren't geniuses. They were just curious before everyone else.</p>
+          <p>Start being curious. 👇</p>
+        </div>
+        <div class="social-post">
+          <div class="post-num">Post 02 — The Myth-Buster</div>
+          <p>"Crypto is only for tech people."</p>
+          <p>Said by people who thought mobile banking was only for tech people in 2008.</p>
+          <p>If you use M-Pesa, you already understand the concept: money that lives on your phone, moves instantly, and doesn't need a bank in the middle. Crypto is the next layer. Different rails. Same idea.</p>
+        </div>
+        <div class="social-post">
+          <div class="post-num">Post 03 — The Local Angle</div>
+          <p>Kenya is one of the highest crypto-adoption countries in the world per capita. Not because Kenyans are reckless. Because we've always been early on financial innovation.</p>
+          <p>M-Pesa. Mobile banking. And now this.</p>
+          <p>The Silicon Savannah doesn't wait for permission.</p>
+        </div>
+        <div class="social-post">
+          <div class="post-num">Post 04 — The Education Play</div>
+          <p>Three things people get wrong about crypto:</p>
+          <p>1. You have to buy a whole coin. (You don't. You can start with KES 500.)<br>2. It's all the same. (Bitcoin ≠ Ethereum ≠ everything else.)<br>3. It's too late. (People said this in 2015. And 2018. And 2021.)</p>
+          <p>Understanding the basics changes everything. Where should we start?</p>
+        </div>
+        <div class="social-post">
+          <div class="post-num">Post 05 — The Credibility Build</div>
+          <p>Our compliance team spent 18 months working with regulators before we launched. Not because we had to. Because we believed that the only way to build something that lasts is to build it right.</p>
+          <p>We're not the fastest exchange. We're the most careful one. In this space, that's a feature.</p>
+        </div>
+        <div class="social-post">
+          <div class="post-num">Post 06 — The CTA</div>
+          <p>You've been watching from the side lines long enough.</p>
+          <p>This week, just learn one thing. What is a blockchain, actually? What makes Bitcoin different from a shilling?</p>
+          <p>We'll show you. No pressure. No hard sell. Just clarity.</p>
+          <p>Follow us. Ask anything. We answer every comment.</p>
+        </div>
+      `
+    },
+    5: {
+      format: '📰 Thought Leadership',
+      title: '"Why Your Bank\'s Content Strategy is Boring You to Death"',
+      body: `
+        <h4>Pitch: CFO Magazine &nbsp;|&nbsp; 900 words &nbsp;|&nbsp; Opinion</h4>
+        <p><em>Here is a sentence I have never read on a bank's website: "We know this is confusing. Let us actually explain it."</em></p>
+        <p>I've read thousands of words of financial content. I have never once finished a piece published by a traditional bank and thought: that changed how I see money. And I'm someone who finds this stuff genuinely interesting.</p>
+        <p>That's the problem. Financial institutions are producing content for a regulator, not a reader.</p>
+        <h4>The Compliance Trap</h4>
+        <p>Most bank content goes through three rounds of legal review before it reaches a human being. By then, every sharp edge has been sanded off. The interesting claim has become a hedge. The clear sentence has become a clause. The thing that was almost useful has been turned into something that protects the institution from liability at the cost of being useful to anyone at all.</p>
+        <p>This is understandable. It is also expensive. Not in legal fees — in attention. Every piece of deadened content is a customer who scrolled past, a prospect who looked elsewhere, a millennial who decided that whatever this company is saying, it clearly wasn't meant for them.</p>
+        <h4>The Generation You're Losing</h4>
+        <p>There is a 27-year-old in Nairobi right now who manages her investments through three different apps, follows four finance creators on YouTube, and has never once visited her bank's blog. She's not uninterested in money. She's uninterested in the way banks talk about money. There is a difference, and most institutions haven't noticed it yet.</p>
+        <p>She learned about compound interest from a 90-second video with a cartoon. She learned about exchange rate risk from a tweet thread. She learned about portfolio diversification from a podcast recorded in someone's bedroom. None of these creators have compliance teams. All of them have her attention.</p>
+        <h4>What Useful Actually Looks Like</h4>
+        <p>The banks getting this right share one quality: they write like they're explaining something to a smart friend, not indemnifying themselves against a lawsuit.</p>
+        <p>They use real numbers. Real scenarios. Real language. They say "if you had KES 10,000" instead of "in the event that a hypothetical sum is allocated." They say "here's what happens to your money" instead of "returns are subject to market conditions and past performance is not indicative of future results."</p>
+        <p>They respect the reader enough to be direct.</p>
+        <h4>The Bottom Line</h4>
+        <p>Your content strategy isn't a compliance problem. It's a courage problem. The question isn't whether you're allowed to be clear. It's whether you're willing to be.</p>
+        <p><em>The institutions that figure this out first won't just have better content. They'll have the next generation of customers. The ones who are currently being very well educated by everyone except you.</em></p>
+      `
+    }
+  };
+
+  // Attach modal triggers
+  document.querySelectorAll('.card-read').forEach((btn, i) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const s = samples[i + 1];
+      document.getElementById('modalContent').innerHTML = `
+        <div class="modal-format">${s.format}</div>
+        <h2 class="modal-title">${s.title}</h2>
+        <div class="modal-body">${s.body}</div>
+      `;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalOverlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+  // Form submit
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    const name = document.querySelector('.form-input').value;
+    if (!name.trim()) { this.textContent = 'Please fill in your name →'; return; }
+    this.textContent = 'Message Sent ✓';
+    this.style.background = '#2d6a4f'; this.style.color = '#fff';
+    setTimeout(() => { this.textContent = 'Send Message'; this.style.background = ''; this.style.color = ''; }, 3000);
+  });
+</script>
+</body>
+</html>
